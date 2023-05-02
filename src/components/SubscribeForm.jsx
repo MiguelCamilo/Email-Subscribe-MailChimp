@@ -4,7 +4,6 @@ const SubscribeForm = () => {
     const [firstName, setfirstName] = useState('')
 	const [lastName, setLastName] = useState('')
 
-
     return (
 		<>
 			<>
