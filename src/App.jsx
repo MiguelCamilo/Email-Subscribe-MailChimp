@@ -1,4 +1,4 @@
-import SubscribeForm from "./components/SubscribeForm"
+import SubscribeForm from "./components/SubscribeForm/SubscribeForm"
 
 function App() {
 
