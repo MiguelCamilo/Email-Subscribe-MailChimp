@@ -39,9 +39,8 @@ const SubscribeForm = () => {
 				setSuccess(true);
 				setIsLoading(true);
 				console.log(data);
-			} else {
-				throw new Error('Request failed');
 			}
+			
 		} catch (error) {
 			setIsLoading(false);
 			console.log(error);
