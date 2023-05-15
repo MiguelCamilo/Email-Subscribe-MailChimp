@@ -1,9 +1,56 @@
-import Inputs from "../Inputs";
+import { useState } from 'react';
+
+import Inputs from '../Inputs';
 
 const SubscribeForm = () => {
+	const [firstname, setfirstName] = useState('');
+	const [lastname, setLastName] = useState('');
+	const [email, setEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
+	const clearInputs = () => {
+		setfirstName('')
+		setLastName('')
+		setEmail('')
+	}
 
-    return (
+	const handleAddUser = async (e) => {
+		e.preventDefault();
+
+		const newUser = {
+			firstname,
+			lastname,
+			email,
+		};
+
+		try {
+			const response = await fetch(`http://localhost:3000/account-exports`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(newUser),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				setIsLoading(true);
+				console.log(data);
+			} else {
+				throw new Error('Request failed');
+			}
+		} catch (error) {
+			setIsLoading(false);
+			console.log(error);
+		}
+		clearInputs()
+
+		setTimeout(() => {
+			setIsLoading(false);
+		},3000)
+	};
+
+	return (
 		<>
 			<>
 				{/* Background Container */}
@@ -29,28 +76,33 @@ const SubscribeForm = () => {
 									Fitness newsletter.
 								</p>
 								{/* input and button */}
-								<form action="/" method="post">
+								<form onSubmit={handleAddUser}>
 									<div className="flex flex-col mt-5 space-y-4 md:space-y-4">
-										<Inputs 
+										<Inputs
+											value={firstname}
+											onChange={(e) => setfirstName(e.target.value)}
 											type="text"
-											placeholder="First Name"  
+											placeholder="First Name"
 										/>
-										<Inputs 
+										<Inputs
+											value={lastname}
+											onChange={(e) => setLastName(e.target.value)}
 											type="text"
-											placeholder="Last Name"  
+											placeholder="Last Name"
 										/>
-										<Inputs 
+										<Inputs
+											value={email}
+											onChange={(e) => setEmail(e.target.value)}
 											type="email"
-											placeholder="Email"  
+											placeholder="Email"
 										/>
-										<a href="./subscribe.html">
-											<button
-												type="button"
-												className="flex-col md:flex-row bg-lime-500 text-zinc-800 rounded-md text-xs items-center px-5 py-3 md:p-3 hover:text-white hover:bg-lime-700 duration-500 w-full"
-											>
-												Subscribe
-											</button>
-										</a>
+
+										<button
+											type="submit"
+											className="flex-col md:flex-row bg-lime-500 text-zinc-800 rounded-md text-xs items-center px-5 py-3 md:p-3 hover:text-white hover:bg-lime-700 duration-500 w-full"
+										>
+											{isLoading ? <p>Success!</p> : <p>Subscribe</p> }
+										</button>										
 									</div>
 								</form>
 							</div>
