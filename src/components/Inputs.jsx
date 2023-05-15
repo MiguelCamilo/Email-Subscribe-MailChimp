@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const Inputs = ({ type, placeholder, value, onChange }) => {
 
-    Inputs.propTypes = {
-		onChange: PropTypes.func.isRequired,
-		value: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        placeholder: PropTypes.string.isRequired,
-    };
+    // Inputs.propTypes = {
+	// 	onChange: PropTypes.func.isRequired,
+	// 	value: PropTypes.string.isRequired,
+    //     type: PropTypes.string.isRequired,
+    //     placeholder: PropTypes.string.isRequired,
+    // };
 
 	return (
 		<>

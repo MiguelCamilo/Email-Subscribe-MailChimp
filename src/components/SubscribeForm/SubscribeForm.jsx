@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 import Inputs from '../Inputs';
 
@@ -6,6 +7,7 @@ const SubscribeForm = () => {
 	const [firstname, setfirstName] = useState('');
 	const [lastname, setLastName] = useState('');
 	const [email, setEmail] = useState('');
+	const [success, setSuccess] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const clearInputs = () => {
@@ -34,6 +36,7 @@ const SubscribeForm = () => {
 
 			if (response.ok) {
 				const data = await response.json();
+				setSuccess(true);
 				setIsLoading(true);
 				console.log(data);
 			} else {
@@ -47,7 +50,8 @@ const SubscribeForm = () => {
 
 		setTimeout(() => {
 			setIsLoading(false);
-		},3000)
+			setSuccess(false);
+		},2000)
 	};
 
 	return (
@@ -83,26 +87,36 @@ const SubscribeForm = () => {
 											onChange={(e) => setfirstName(e.target.value)}
 											type="text"
 											placeholder="First Name"
+											required
 										/>
 										<Inputs
 											value={lastname}
 											onChange={(e) => setLastName(e.target.value)}
 											type="text"
 											placeholder="Last Name"
+											required
 										/>
 										<Inputs
 											value={email}
 											onChange={(e) => setEmail(e.target.value)}
 											type="email"
 											placeholder="Email"
+											required
 										/>
 
 										<button
 											type="submit"
-											className="flex-col md:flex-row bg-lime-500 text-zinc-800 rounded-md text-xs items-center px-5 py-3 md:p-3 hover:text-white hover:bg-lime-700 duration-500 w-full"
+											className="bg-lime-500 text-zinc-800 rounded-md text-xs items-center px-5 py-3 md:p-3 hover:text-white hover:bg-lime-700 duration-500 w-full"
 										>
-											{isLoading ? <p>Success!</p> : <p>Subscribe</p> }
-										</button>										
+											{isLoading ? <AiOutlineLoading3Quarters className='flex items-center w-full animate-spin' /> : <p>Subscribe</p> }
+										</button>		
+										<div className="">
+											{success && (
+												<p className="text-xs text-center text-lime-500 transition duration-150">
+													Thank you for subscribing!
+												</p>
+											)}											
+										</div>								
 									</div>
 								</form>
 							</div>
